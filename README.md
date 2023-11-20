@@ -40,6 +40,29 @@ passport.use(new GitHubStrategy({
 ));
 ```
 
+
+By default, Public GiHub is used as the OAuth provider. However, an instance of GitHub Enterprise can also be used as the provider.
+To configure that, provide the relevant endpoints to that server as follows:
+
+```javascript
+passport.use(new GitHubStrategy({
+     clientID: GITHUB_CLIENT_ID,
+     clientSecret: GITHUB_CLIENT_SECRET,
+     authorizationURL: `https://${ENTERPRISE_INSTANCE_HOST_NAME}/login/oauth/authorize`,
+     tokenURL: `https://${ENTERPRISE_INSTANCE_HOST_NAME}/login/oauth/access_token`,
+     userProfileURL: `https://${ENTERPRISE_INSTANCE_HOST_NAME}/api/v3/user`, 
+     userEmailURL: `https://${ENTERPRISE_INSTANCE_HOST_NAME}/api/v3/user/emails`,
+     callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        User.findOrCreate({ githubId: profile.id }, function (err, user) {
+            return done(err, user);
+        });
+    }
+));
+```
+
+
 #### Authenticate Requests
 
 Use `passport.authenticate()`, specifying the `'github'` strategy, to
