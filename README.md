@@ -41,7 +41,7 @@ passport.use(new GitHubStrategy({
 ```
 
 
-By default, Public GiHub is used as the OAuth provider. However, an instance of GitHub Enterprise can also be used as the provider.
+By default, Public GitHub is used as the OAuth provider. However, an instance of GitHub Enterprise can also be used as the provider.
 To configure that, provide the relevant endpoints to that server as follows:
 
 ```javascript
